@@ -92,9 +92,9 @@ export const BoxItem = styled.div`
   flex-shrink: 0;
 `;
 
-export const InnerBoxItem = styled.div`
+export const InnerBoxItem = styled.div<{ $color?: string }>`
   width: 55px;
   height: 55px;
-  background-color: beige;
+  background-color: ${(props) => props.$color || "transparent"};
   border-radius: 10px;
 `;
