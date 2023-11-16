@@ -4,6 +4,7 @@ export const Box = styled.div`
   width: 100%;
   height: 400px;
   position: relative;
+  margin-top: 50px;
 `;
 
 export const Lines = styled.div`

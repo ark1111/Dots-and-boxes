@@ -12,24 +12,29 @@ import {
   VerticalLine,
   VerticalLineBox,
 } from "./Board.styled";
-import { linesData, boxesData } from "../data";
+import { linesData, boxesData, colors } from "../data";
 
-type Props = {};
-
-const colors = ["#748CDB", "#fe2a71"];
+type Props = {
+  turn: "A" | "B";
+  setTurn:React.Dispatch<React.SetStateAction<"A" | "B">>;
+  aBoxes: number[];
+  setABoxes: React.Dispatch<React.SetStateAction<number[]>>;
+  bBoxes: number[];
+  setBBoxes: React.Dispatch<React.SetStateAction<number[]>>;
+};
 
 const players = {
   A: 1,
   B: 2,
 };
 
-const Board = (props: Props) => {
-  const [turn, setTurn] = useState<"A" | "B">("B");
+const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) => {
+  //   const [turn, setTurn] = useState<"A" | "B">("B");
   const [aLines, setALines] = useState<number[]>([]);
   const [bLines, setBLines] = useState<number[]>([]);
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
-  const [aBoxes, setABoxes] = useState<number[]>([]);
-  const [bBoxes, setBBoxes] = useState<number[]>([]);
+  //   const [aBoxes, setABoxes] = useState<number[]>([]);
+  //   const [bBoxes, setBBoxes] = useState<number[]>([]);
 
   useEffect(() => {
     // prevent turn changing After filling the box

@@ -1,3 +1,5 @@
+export const colors = ["#748CDB", "#fe2a71"];
+
 export const linesData = [
   {
     id: 1,
