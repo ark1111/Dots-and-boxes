@@ -18,7 +18,7 @@ function App() {
         setWinner("A");
       } else if (bBoxes.length > aBoxes.length) {
         setWinner("B");
-      } else {
+      } else if (aBoxes.length === bBoxes.length) {
         setWinner("draw");
       }
     }
@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     checkWin();
-  }, [turn]);
+  });
 
   return (
     <Box>

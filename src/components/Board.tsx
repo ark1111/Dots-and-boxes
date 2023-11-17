@@ -16,7 +16,7 @@ import { linesData, boxesData, colors } from "../data";
 
 type Props = {
   turn: "A" | "B";
-  setTurn:React.Dispatch<React.SetStateAction<"A" | "B">>;
+  setTurn: React.Dispatch<React.SetStateAction<"A" | "B">>;
   aBoxes: number[];
   setABoxes: React.Dispatch<React.SetStateAction<number[]>>;
   bBoxes: number[];
@@ -28,21 +28,17 @@ const players = {
   B: 2,
 };
 
-const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) => {
+const Board = ({
+  turn,
+  setTurn,
+  aBoxes,
+  setABoxes,
+  bBoxes,
+  setBBoxes,
+}: Props) => {
   const [aLines, setALines] = useState<number[]>([]);
   const [bLines, setBLines] = useState<number[]>([]);
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
-
-  useEffect(() => {
-    // prevent turn changing After filling the box
-    if (aBoxes.length > 0 || bBoxes.length > 0) {
-      if (turn === "A") {
-        setTurn("B");
-      } else {
-        setTurn("A");
-      }
-    }
-  }, [aBoxes, bBoxes]);
 
   const selectLine = (id: number, boxIds: number[]) => {
     let newSelectedLines = [...selectedLines];
@@ -51,17 +47,21 @@ const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) =>
       newList.push(id);
       newSelectedLines.push(id);
       setALines(newList);
-      setTurn("B");
       setSelectedLines(newSelectedLines);
-      checkFillingBox(id, boxIds);
+      let changeTurnPermission = checkFillingBox(id, boxIds);
+      if (changeTurnPermission) {
+        setTurn("B");
+      }
     } else if (!aLines.includes(id) && !bLines.includes(id)) {
       let newList = [...bLines];
       newList.push(id);
       newSelectedLines.push(id);
       setBLines(newList);
-      setTurn("A");
       setSelectedLines(newSelectedLines);
-      checkFillingBox(id, boxIds);
+      let changeTurnPermission = checkFillingBox(id, boxIds);
+      if (changeTurnPermission) {
+        setTurn("A");
+      }
     }
   };
 
@@ -75,7 +75,8 @@ const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) =>
     }
   };
 
-  const checkFillingBox = (lineId: number, boxIds: number[]) => {
+  const checkFillingBox = (lineId: number, boxIds: number[]): boolean => {
+    let shouldTurnChange = true;
     let newABoxes = [...aBoxes];
     let newBBoxes = [...bBoxes];
     for (let i = 0; i < boxIds.length; i++) {
@@ -99,10 +100,12 @@ const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) =>
               newBBoxes.push(boxIds[i]);
               setBBoxes(newBBoxes);
             }
+            shouldTurnChange = false;
           }
         }
       }
     }
+    return shouldTurnChange;
   };
 
   const getBoxColor = (id: number) => {
