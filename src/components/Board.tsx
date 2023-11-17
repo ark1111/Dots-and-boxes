@@ -29,12 +29,9 @@ const players = {
 };
 
 const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) => {
-  //   const [turn, setTurn] = useState<"A" | "B">("B");
   const [aLines, setALines] = useState<number[]>([]);
   const [bLines, setBLines] = useState<number[]>([]);
   const [selectedLines, setSelectedLines] = useState<number[]>([]);
-  //   const [aBoxes, setABoxes] = useState<number[]>([]);
-  //   const [bBoxes, setBBoxes] = useState<number[]>([]);
 
   useEffect(() => {
     // prevent turn changing After filling the box
@@ -129,7 +126,7 @@ const Board = ({ turn,setTurn, aBoxes, setABoxes, bBoxes, setBBoxes }: Props) =>
       <Lines>
         {linesData.map((item, index) => (
           <LinesRow key={item.id}>
-            {item.lines.map((line, LineIndex) =>
+            {item.lines.map((line) =>
               index % 2 === 0 ? (
                 <React.Fragment key={line.lineId}>
                   <Dot></Dot>
